@@ -1,6 +1,8 @@
 import { set } from "setvalue";
 import { OEmbedProviders } from "./oembed";
 
+const JSON5 = require("json5");
+
 declare const URL: typeof import("url").URL;
 
 const providers = new OEmbedProviders(require("../vendor/providers.json"));
@@ -760,7 +762,7 @@ export class Handler {
 
       if (type === "application/ld+json") {
         try {
-          const jsonld = JSON.parse(prevContext.text) as unknown;
+          const jsonld = JSON5.parse(prevContext.text) as unknown;
 
           if (typeof jsonld === "object" && jsonld !== null) {
             this.result.jsonld = merge(
